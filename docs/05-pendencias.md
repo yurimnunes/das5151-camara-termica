@@ -11,6 +11,9 @@
 Roteiro detalhado em [06-testes-bancada.md](06-testes-bancada.md).
 
 - [ ] Parte 1: sensores (ponte + INA125P e DS18B20) com `firmware/teste_sensores`
+  - [x] DS18B20
+  - [x] Ponte a 3 fios (Vab cerca de +10 mV)
+  - [ ] **Trocar o INA125P** (o atual não opera; ver [ensaio 01](ensaios/01-sensores-2026-11-26.md)) e medir de novo com `firmware/teste_nos`
 - [ ] Parte 2: acionamento
 - [ ] Parte 3: sistema completo
 - [ ] Confirmar o fio de terra da sonda DS18B20 com multímetro antes de energizar
