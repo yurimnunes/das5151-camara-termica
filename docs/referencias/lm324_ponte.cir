@@ -1,0 +1,39 @@
+* Ponte Pt100 + amplificador de instrumentacao com LM324 (opcao A)
+* Modelo comportamental do LM324: ganho 100 dB, saida de 0 a Vcc-1,5 V, offset VOS
+.subckt opamp inp inn out vcc vee PARAMS: VOS=0
+Vos inp inpx DC {VOS}
+G1 0 n1 inpx inn 1e-3
+R1 n1 0 1e8
+C1 n1 0 159p
+Bo o1 0 V = max(min(V(n1), V(vcc)-1.5), V(vee)+0.005)
+Ro o1 out 10
+.ends
+Vcc vcc 0 DC 5
+Vt tt 0 DC 25
+* ponte
+Rtop vcc T 1.5k
+R3 T a 100
+BptA a F I = V(a,F)/(100*(1+3.9083e-3*V(tt)-5.775e-7*V(tt)*V(tt)))
+BptB T b I = V(T,b)/(100*(1+3.9083e-3*V(tt)-5.775e-7*V(tt)*V(tt)))
+R5 b F 100
+Rbot F 0 1k
+* LM324
+XU1A b n2 o1 vcc 0 opamp VOS=0
+XU1B a n6 o7 vcc 0 opamp VOS=0
+Rf1 o1 n2 2.2k
+Rf2 o7 n6 2.2k
+Rg n2 n6 1k
+Rd1a o1 n9 1k
+Rd2a n9 o8 22k
+Rd1b o7 n10 1k
+Rd2b n10 0 22k
+XU1C n10 n9 o8 vcc 0 opamp VOS=0
+* filtro
+Rfil o8 A0 1k
+Cfil A0 0 100u
+.dc Vt 0 85 1
+.control
+run
+wrdata lm324_ponte.dat V(tt) V(a) V(b) V(o7) V(o1) V(o8) V(A0)
+.endc
+.end

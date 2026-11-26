@@ -2,7 +2,7 @@
 
 Testar por partes, nesta ordem. Só passar para a próxima parte quando a anterior bater com o esperado.
 
-1. **Sensores** (medição interna com ponte + INA125P e medição ambiente com DS18B20): este documento
+1. **Sensores** (medição interna com ponte + amplificador e medição ambiente com DS18B20): este documento
 2. Acionamento do aquecedor (PC817 + TIP122): a escrever
 3. Sistema completo e ensaio de degrau: a escrever
 
@@ -12,7 +12,7 @@ Testar por partes, nesta ordem. Só passar para a próxima parte quando a anteri
 
 **Montar só:**
 
-* Medição interna: Pt100 A e B, R3 e R5 (100 Ω), Rtop (1,5 kΩ), Rbot (1 kΩ), INA125P com RG (330 Ω) e capacitor de 100 nF, filtro RC (1 kΩ + 100 µF). Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png).
+* Medição interna: Pt100 A e B, R3 e R5 (100 Ω), Rtop (1,5 kΩ), Rbot (1 kΩ), amplificador com LM324 (ver [`referencias/lm324.md`](referencias/lm324.md); o INA125P original queimou) e capacitor de 100 nF, filtro RC (1 kΩ + 100 µF). Esquema: [`esq_pt100_lm324.png`](referencias/esq_pt100_lm324.png) (o do relatório, [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png), ainda é com o INA125P).
 * Medição ambiente: DS18B20 com pull-up de 3,3 kΩ e capacitor de 100 nF. Esquema: [`esq_ds18b20.png`](../relatorio/figuras/esq_ds18b20.png).
 
 **Não ligar:** acionamento e fonte de 12 V. O firmware `teste_sensores` mantém o D3 em nível baixo de qualquer forma.
@@ -33,7 +33,7 @@ Os valores esperados abaixo supõem alimentação de exatamente 5,00 V. Se o 5 V
 
 Anotar os valores medidos de R3, R5 e dos Pt100. Eles explicam depois o offset da leitura.
 
-### 1.2 Só a ponte, sem o INA (multímetro em V)
+### 1.2 Só a ponte, sem o amplificador (multímetro em V)
 
 Conectar o Arduino pelo USB. A ponte é alimentada pelo 5 V do Arduino. Medir em relação ao GND:
 
@@ -51,17 +51,19 @@ Conectar o Arduino pelo USB. A ponte é alimentada pelo 5 V do Arduino. Medir em
 
 Um erro de alguns décimos de mV em Vab é normal: com resistores de 1 %, cada 1 Ω de diferença em R3 ou R5 desloca a leitura em cerca de 1 a 2 °C. A calibração corrige isso depois.
 
-### 1.3 Com o INA125P, antes do filtro
+### 1.3 Com o amplificador (LM324), antes do filtro
 
-Medir no pino 10 (VO) em relação ao GND:
+> O INA125P queimou e foi trocado por um LM324 (2026-11-26). Montagem e pinagem em [`referencias/lm324.md`](referencias/lm324.md).
 
-| T | Vab | VO esperado |
-|---|---|---|
-| 20 °C | 7,48 mV | 1,390 V |
-| 25 °C | 9,34 mV | 1,736 V |
-| 30 °C | 11,20 mV | 2,081 V |
+Medir no pino 8 do LM324 (Vo) em relação ao GND:
 
-Regra rápida: VO ≈ 186 × Vab. Segurando um Pt100, VO sobe cerca de 35 mV por °C.
+| T | Vab | Pino 7 − pino 1 | Vo esperado |
+|---|---|---|---|
+| 20 °C | 7,48 mV | 40,4 mV | 0,889 V |
+| 25 °C | 9,34 mV | 50,4 mV | 1,110 V |
+| 30 °C | 11,20 mV | 60,5 mV | 1,331 V |
+
+Regra rápida: Vo ≈ 119 × Vab, mais o offset do LM324 (algumas centenas de mV são normais). Segurando um Pt100, Vo sobe cerca de 22 mV por °C.
 
 ### 1.4 DS18B20: ligação
 
@@ -92,7 +94,7 @@ Colunas: `tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C  T_amb_C`.
 
 | O que olhar | Esperado |
 |---|---|
-| `A0_cont` a 25 °C | cerca de 355 (284 a 20 °C, 426 a 30 °C) |
+| `A0_cont` a 25 °C | cerca de 227 (182 a 20 °C, 272 a 30 °C), mais o offset do LM324 |
 | `A0_V` | igual ao VO medido no 1.3, com diferença de poucos mV |
 | `ruido_cont` | 0 a 2 contagens. Acima de 5: mau contato, fio longo ou falta do capacitor |
 | `T_pt100_C` | perto do ambiente, com offset de alguns °C antes da calibração |
@@ -108,12 +110,12 @@ Deixar rodando 5 a 10 minutos parado. Esse log (`dados/*_sensores.tsv`) mostra a
 | Sintoma | Causa provável |
 |---|---|
 | Vab perto de 0 e não muda ao aquecer | os dois Pt100 no mesmo lado da ponte, ou ponte sem alimentação |
-| Vab negativo | a e b trocados no multímetro ou no INA, ou os dois Pt100 trocados de posição com R3 e R5 |
+| Vab negativo | a e b trocados no multímetro ou no amplificador, ou os dois Pt100 trocados de posição com R3 e R5 |
 | Vab de dezenas ou centenas de mV | sensor aberto ou resistor de valor errado (conferir 1.1) |
-| VO preso perto de 0 V | Vab negativo (VIN+ e VIN− trocados) ou INA sem alimentação (pinos 1 e 2) |
-| VO preso perto de 4 V ou mais | saturação: Vab alto demais, RG errado ou SENSE (pino 11) solto do VO (pino 10) |
+| Vo preso perto de 0 V | Vab negativo (nós a e b trocados nos pinos 5 e 3), LM324 sem alimentação (pinos 4 e 11) ou Rd1 (1 kΩ) e Rd2 (22 kΩ) trocados no subtrator |
+| Vo preso perto de 3,5 V | saturação: Vab alto demais, Rg errado ou solto, realimentação Rd2 de 22 kΩ (pinos 8 e 9) solta |
 | VO certo mas `A0_V` diferente | filtro mal ligado, capacitor invertido (faixa no GND) ou GNDs diferentes |
-| `ruido_cont` alto | mau contato na protoboard, falta do 100 nF entre os pinos 1 e 3, cabo do Pt100 perto de fonte de ruído |
+| `ruido_cont` alto | mau contato na protoboard, falta do 100 nF entre os pinos 4 e 11 do LM324, cabo do Pt100 perto de fonte de ruído |
 | `DS18B20 encontrados: 0` e `T_amb_C` = `erro` | dados fora do D2, falta do pull-up de 3,3 kΩ ou fios trocados |
 | `T_amb_C` = 85,00 fixo | sensor sem alimentação estável (é o valor de quando liga) ou VDD mal ligado |
 | `T_amb_C` = −127 ou `erro` às vezes | mau contato no fio de dados ou pull-up fraco para o cabo |

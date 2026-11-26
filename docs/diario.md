@@ -4,6 +4,13 @@ Entradas mais recentes no topo.
 
 ## 2026-11-26
 
+* **Medição interna com LM324 aprovada** ([ensaio 02](ensaios/02-lm324-2026-11-26.md), log `dados/2026-11-26_102800_lm324-1.tsv`, Serial Monitor da IDE em outro computador): A0 em 1,285 V parado (0,14 V acima do teórico, cerca de 3 °C de offset, dentro do típico), ruído de no máximo 1 contagem, e os dois Pt100 fazem a saída subir ao serem segurados (até 1,505 e 1,549 V). DS18B20 ok. **Parte 1 concluída.** Próximo: montar o acionamento (Parte 2) e calibrar o Pt100.
+* **INA125P trocado por LM324.** O INA125P foi considerado queimado (alimentação, SLEEP, entradas, RG, IAREF e VREFCOM certos, mas sem resposta no pino 8 e VREFBG em 0,33 V; ver [ensaio 01](ensaios/01-sensores-2026-11-26.md)). Não havia outro no laboratório, só um LM324. Montado no lugar um amplificador de instrumentação de 3 amp-ops:
+  * U1A e U1B com Rf = 2,2 kΩ e Rg = 1 kΩ (G1 = 5,4), U1C como subtrator com Rd1 = 1 kΩ e Rd2 = 22 kΩ (G2 = 22), U1D sem uso. Ganho total ≈ 119. O primeiro projeto usava 10 kΩ / 1,8 kΩ / 100 kΩ (G ≈ 121), mas não havia 10 kΩ no laboratório; escolhida a combinação com 1 kΩ, 2,2 kΩ e 22 kΩ.
+  * Ganho reduzido de 186 para 119 porque a saída do LM324 em 5 V só vai até cerca de 3,5 V. Sensibilidade passa de 68,7 para 44,4 mV/°C; faixa de cerca de 3 a 76 °C.
+  * Documentação em [`referencias/lm324.md`](referencias/lm324.md), esquema [`esq_pt100_lm324.png`](referencias/esq_pt100_lm324.png) e montagem pino a pino [`lm324-montagem.png`](referencias/lm324-montagem.png).
+  * Firmwares `teste_sensores` e `teste_camara` atualizados para a reta nova (`SENS_V_POR_C` = 0,0444, `V_REF_25C` = 1,110). No `teste_camara`, limite de saturação de 4,3 para 3,4 V e nova proteção que desliga o aquecedor se o A0 ficar abaixo de 0,15 V (o sintoma do INA queimado, que a proteção por temperatura não pegava).
+  * Relatório ainda descreve o INA125P: atualização registrada nas [pendências](05-pendencias.md).
 * Diagnóstico da medição interna com o Arduino como voltímetro (`firmware/teste_nos`), detalhes no [ensaio 01](ensaios/01-sensores-2026-11-26.md):
   * Componente solto deixava a ponte sem 5 V.
   * Pt100 A ligado pelos dois fios do par (mesma ponta do sensor) aparecia como curto.

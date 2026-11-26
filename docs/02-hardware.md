@@ -6,25 +6,25 @@
 |---|---|
 | D2 | DQ do DS18B20 (pull-up de 3,3 kΩ para 5 V) |
 | D3 | PWM (490 Hz) → R1 680 Ω → LED do PC817 |
-| A0 | Saída do INA125P após filtro RC (1 kΩ + 100 µF) |
-| 5 V | Ponte, INA125P, DS18B20 |
+| A0 | Saída do amplificador (LM324, pino 8) após filtro RC (1 kΩ + 100 µF) |
+| 5 V | Ponte, LM324, DS18B20 |
 | GND | Terra do lado Arduino (isolado do terra da fonte) |
 
-## Medição da temperatura interna (Pt100 + INA125P)
+## Medição da temperatura interna (Pt100 + LM324)
 
-Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png). Pinagem do INA125P: [`referencias/ina125p.md`](referencias/ina125p.md)
+> **Mudança em 2026-11-26:** o INA125P queimou (ver [ensaio 01](ensaios/01-sensores-2026-11-26.md)) e foi substituído por um amplificador de instrumentação de 3 amp-ops montado com LM324. Esquema: [`esq_pt100_lm324.png`](referencias/esq_pt100_lm324.png). Montagem pino a pino: [`lm324-montagem.png`](referencias/lm324-montagem.png). Detalhes e valores esperados: [`referencias/lm324.md`](referencias/lm324.md). O relatório ainda descreve o INA125P ([`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png)).
 
 * Ponte: Pt100 A e Pt100 B em braços opostos, completada por 2 resistores de 100 Ω (equilíbrio em 0 °C). Sensores opostos dobram a sensibilidade.
 * Rtop 1,5 kΩ e Rbot 1 kΩ em série com a ponte: corrente total de 1,92 mA (0,96 mA por Pt100) e modo comum perto de 2 V.
 * Tensão sobre a ponte: 192,3 mV a 0 °C (1,923 mA × 100 Ω). Sobe com a temperatura, porque a resistência dos Pt100 aumenta, e fica perto de 200 mV na faixa de operação. A simulação já considera isso, e a calibração em 2 pontos absorve qualquer diferença de ganho.
 * Sensibilidade da ponte: cerca de 0,37 mV/°C.
-* INA125P com RG = 330 Ω: G = 4 + 60 kΩ / RG ≈ 186.
-* Saída: cerca de 68,7 mV/°C, resolução de 0,071 °C por LSB.
-* Faixa linear da saída: 0,8 a 4,2 V, que dá 12 a 61 °C.
-* Pinos do INA125P: SLEEP em V+, SENSE em VO, V−, IAREF e VREFCOM no GND. Pinos 4, 13 a 16 sem ligação. 100 nF entre os pinos 1 e 3.
-* 3 fios: o fio único de cada sensor fica em série com o próprio sensor, um fio do par fica em série com o resistor vizinho (resistências de fio se cancelam), o outro fio do par leva a tensão ao INA sem corrente.
+* Amplificador: LM324 alimentado em 5 V. U1A (+ no nó b) e U1B (+ no nó a) com Rf = 2,2 kΩ e Rg = 1 kΩ: G1 = 1 + 2 · Rf / Rg = 5,4. U1C como subtrator com Rd1 = 1 kΩ e Rd2 = 22 kΩ: G2 = 22. Ganho total G ≈ 119 (valores escolhidos por falta de 10 kΩ no laboratório). U1D sem uso (pino 12 no GND, 13 ligado ao 14). 100 nF entre os pinos 4 e 11.
+* Saída: cerca de 44,4 mV/°C (1,110 V a 25 °C), resolução de 0,11 °C por LSB.
+* Faixa da saída: cerca de 0,15 a 3,4 V (o LM324 não passa de Vcc − 1,5 V), que dá cerca de 3 a 76 °C. O ganho foi reduzido de 186 para 119 por causa desse limite.
+* Offset de entrada do LM324 de até 7 mV (até cerca de 0,85 V na saída): erro fixo, tirado pela calibração em 2 pontos.
+* 3 fios: o fio único de cada sensor fica em série com o próprio sensor, um fio do par fica em série com o resistor vizinho (resistências de fio se cancelam), o outro fio do par leva a tensão ao + do amp-op sem corrente.
 * Filtro RC: τ = 0,1 s, fc ≈ 1,6 Hz.
-* Conversão linear (erro de não linearidade ≤ 0,11 °C entre 15 e 60 °C) com calibração em 2 pontos para tirar o offset dos resistores de 1 %.
+* Conversão linear (erro de não linearidade ≤ 0,11 °C entre 15 e 60 °C) com calibração em 2 pontos para tirar o offset dos resistores de 1 % e do LM324.
 
 ## Temperatura ambiente (DS18B20)
 

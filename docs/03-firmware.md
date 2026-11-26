@@ -48,9 +48,9 @@ Código de teste dos módulos, ainda sem controle em malha fechada. Serve para v
 
 * **DS18B20 (D2):** resolução de 12 bits, conversão não bloqueante. A cada segundo lê o resultado anterior e dispara a próxima conversão.
 * **Pt100 (A0):** média de 16 leituras, converte para tensão (referência fixa de 5,0 V) e depois para temperatura pela reta da simulação:
-  `T = 25 + (V − 1,736) / 0,0687`
+  `T = 25 + (V − 1,110) / 0,0444` (valores teóricos do amplificador com LM324, ganho 119)
 * **PWM (D3):** valor em % digitado no Serial Monitor, limitado a 80 % (`PWM_MAX_PCT`).
-* **Proteção:** desliga o PWM se a temperatura do Pt100 passar de 60 °C ou se A0 passar de 4,3 V (INA saturado).
+* **Proteção:** desliga o PWM se a temperatura do Pt100 passar de 60 °C, se A0 passar de 3,4 V (LM324 saturado) ou se A0 ficar abaixo de 0,15 V (saída presa embaixo: amplificador ou ponte em falha, como aconteceu com o INA125P queimado).
 * **Saída serial:** 1 linha por segundo, separada por tabulação.
 
 ### Uso pela IDE (alternativa ao monitor em Python)
@@ -68,8 +68,9 @@ tempo_s  PWM_%  A0_V  T_pt100_C  T_amb_C
 
 | Constante | Valor atual | Observação |
 |---|---|---|
-| `SENS_V_POR_C` | 0,0687 | Vem da simulação. Trocar pelo valor da calibração em 2 pontos |
-| `V_REF_25C` | 1,736 | Idem |
+| `SENS_V_POR_C` | 0,0444 | Teórico para o LM324 com Rf = 2,2 kΩ, Rg = 1 kΩ, Rd1 = 1 kΩ, Rd2 = 22 kΩ (antes 0,0687 com o INA125P). Trocar pelo valor da calibração em 2 pontos |
+| `V_REF_25C` | 1,110 | Idem (antes 1,736) |
+| `V_A0_MAX` / `V_A0_MIN` | 3,4 / 0,15 | Limites de leitura válida; fora deles o aquecedor desliga |
 | `PWM_MAX_PCT` | 80 | Limite de segurança nos testes |
 | `T_MAX_CAMARA` | 60,0 | Corte por sobretemperatura |
 
@@ -77,4 +78,4 @@ tempo_s  PWM_%  A0_V  T_pt100_C  T_amb_C
 
 * Texto não numérico no Serial vira 0 em `parseInt`, então desliga o aquecedor (falha segura).
 * A proteção zera o PWM mas não trava: se o usuário mandar outro valor, o aquecedor liga de novo até a próxima checagem (1 s depois).
-* A referência do A/D vem do mesmo 5 V que alimenta a ponte e o INA, então variações do 5 V do USB se cancelam em parte. O restante é absorvido pela calibração.
+* A referência do A/D vem do mesmo 5 V que alimenta a ponte e o LM324, então variações do 5 V do USB se cancelam em parte. O restante é absorvido pela calibração.

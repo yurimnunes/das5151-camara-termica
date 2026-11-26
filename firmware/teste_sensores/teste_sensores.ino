@@ -1,7 +1,7 @@
 // =====================================================================
 // DAS5151 - Câmara térmica | TESTE DOS SENSORES (sem acionamento)
 // ---------------------------------------------------------------------
-// - Medição interna: saída do INA125P no A0 (após o filtro RC)
+// - Medição interna: saída do amplificador com LM324 no A0 (após o filtro RC)
 // - Medição ambiente: DS18B20 no D2, leitura sem travar o loop
 // - NÃO aciona o aquecedor: D3 fica em LOW o tempo todo
 //
@@ -10,7 +10,7 @@
 //   tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C  T_amb_C
 //   A0_cont    = média de 64 leituras do A/D (0 a 1023)
 //   ruido_cont = maior menos menor leitura dentro das 64 (pico a pico)
-//   Vab_mV     = tensão da ponte estimada (A0_V / ganho do INA)
+//   Vab_mV     = tensão da ponte estimada (A0_V / ganho do amplificador)
 //   T_amb_C    = "erro" se o DS18B20 não responder
 // =====================================================================
 
@@ -21,11 +21,12 @@ const int PINO_DS18B20 = 2;
 const int PINO_PWM     = 3;   // garante o aquecedor desligado se o acionamento estiver montado
 const int PINO_PT100   = A0;
 
-// Mesma reta do teste_camara (simulação): 68,7 mV/°C, 1,736 V a 25 °C.
-// Ajustar depois com a calibração em 2 pontos.
-const float SENS_V_POR_C = 0.0687;
-const float V_REF_25C    = 1.736;
-const float GANHO_INA    = 4.0 + 60000.0 / 330.0;  // RG = 330 ohm
+// Amplificador de instrumentação com LM324 (o INA125P queimou, 2026-11-26).
+// G = (22k / 1k) * (1 + 2 * 2,2k / 1k) ≈ 119 -> 44,4 mV/°C, 1,110 V a 25 °C.
+// Valores teóricos: ajustar depois com a calibração em 2 pontos.
+const float SENS_V_POR_C = 0.0444;
+const float V_REF_25C    = 1.110;
+const float GANHO_AMP    = (22000.0 / 1000.0) * (1.0 + 2.0 * 2200.0 / 1000.0);  // Rd2/Rd1 * (1 + 2 Rf/Rg)
 const float V_ADC_REF    = 5.0;
 const int   N_AMOSTRAS   = 64;
 
@@ -68,7 +69,7 @@ void loop() {
   }
   float cont = soma / (float)N_AMOSTRAS;
   float vA0  = cont * V_ADC_REF / 1023.0;
-  float vab  = vA0 / GANHO_INA * 1000.0;
+  float vab  = vA0 / GANHO_AMP * 1000.0;
   float t    = 25.0 + (vA0 - V_REF_25C) / SENS_V_POR_C;
 
   Serial.print(millis() / 1000);   Serial.print('\t');

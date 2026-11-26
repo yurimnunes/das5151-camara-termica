@@ -2,7 +2,7 @@
 // DAS5151 - Câmara térmica | Código de TESTE dos módulos
 // ---------------------------------------------------------------------
 // - Lê o DS18B20 (temperatura ambiente) no pino D2, sem travar o loop
-// - Lê a saída do INA125P (Pt100) no A0 e estima a temperatura
+// - Lê a saída do amplificador com LM324 (Pt100) no A0 e estima a temperatura
 // - Controla o PWM do aquecedor no D3 pelo Serial Monitor
 //
 // Bibliotecas (Ferramentas > Gerenciar Bibliotecas):
@@ -20,17 +20,20 @@
 // ---------------- Pinos ----------------
 const int PINO_DS18B20 = 2;   // dados do DS18B20 (com pull-up 3,3 kΩ para 5 V)
 const int PINO_PWM     = 3;   // D3 -> R1 -> LED do PC817
-const int PINO_PT100   = A0;  // saída do INA125P (após o filtro RC)
+const int PINO_PT100   = A0;  // saída do LM324, pino 8 (após o filtro RC)
 
 // ---------------- Segurança ----------------
 const int   PWM_MAX_PCT   = 80;    // limite de PWM nos testes (%)
 const float T_MAX_CAMARA  = 60.0;  // acima disso o aquecedor desliga (°C)
+const float V_A0_MAX      = 3.4;   // LM324 saturado em cima (saída máx. ~3,5 V)
+const float V_A0_MIN      = 0.15;  // saída presa embaixo: amplificador ou ponte em falha
 
 // ---------------- Conversão do Pt100 ----------------
-// Reta da simulação: 68,7 mV/°C, 1,736 V a 25 °C.
-// Faixa útil: ~12 a ~61 °C. Ajustar depois com a calibração em 2 pontos.
-const float SENS_V_POR_C = 0.0687;
-const float V_REF_25C    = 1.736;
+// Amplificador com LM324 (o INA125P queimou, 2026-11-26), G ≈ 119
+// (Rf 2,2k, Rg 1k, Rd1 1k, Rd2 22k): 44,4 mV/°C, 1,110 V a 25 °C. Faixa útil: ~3 a ~76 °C.
+// Valores teóricos: ajustar depois com a calibração em 2 pontos.
+const float SENS_V_POR_C = 0.0444;
+const float V_REF_25C    = 1.110;
 
 OneWire oneWire(PINO_DS18B20);
 DallasTemperature ds18b20(&oneWire);
@@ -92,8 +95,10 @@ void loop() {
     float vA0 = lerTensaoA0();
     float tPt100 = 25.0 + (vA0 - V_REF_25C) / SENS_V_POR_C;
 
-    // proteção: sobretemperatura ou leitura fora da faixa (saturação do INA)
-    if (tPt100 > T_MAX_CAMARA || vA0 > 4.3) {
+    // proteção: sobretemperatura ou leitura fora da faixa.
+    // Saída presa embaixo também desliga: com o INA queimado a leitura ficava
+    // perto de 0 V e a proteção por temperatura nunca atuaria.
+    if (tPt100 > T_MAX_CAMARA || vA0 > V_A0_MAX || vA0 < V_A0_MIN) {
       if (pwmPct > 0) Serial.println(F("!! Protecao: aquecedor desligado"));
       aplicarPWM(0);
     }

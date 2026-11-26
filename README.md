@@ -5,7 +5,7 @@ Prof. Rodolfo Cesar Costa Flesch.
 
 Equipe: Yuri Melo Nunes, Giulia Cenci dos Santos, Ana Luíza Luft.
 
-Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. Temperatura interna medida por 2 Pt100 em ponte de Wheatstone com INA125P; temperatura ambiente medida por DS18B20 para compensação feedforward. Arduino Uno faz aquisição e gera o PWM.
+Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. Temperatura interna medida por 2 Pt100 em ponte de Wheatstone com amplificador de instrumentação montado com LM324 (o INA125P previsto queimou); temperatura ambiente medida por DS18B20 para compensação feedforward. Arduino Uno faz aquisição e gera o PWM.
 
 ## Estrutura
 
@@ -14,7 +14,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 | `relatorio/` | Relatório em LaTeX, um arquivo por seção. Mapa em [`relatorio/README.md`](relatorio/README.md) |
 | `scripts/overleaf-zip.sh` | Gera o zip do relatório para subir no Overleaf |
 | `firmware/teste_camara/` | Firmware de teste dos módulos (sensores e PWM) |
-| `firmware/teste_nos/` | Arduino como voltímetro: tensões dos nós da ponte e do INA nos pinos A0 a A5 |
+| `firmware/teste_nos/` | Arduino como voltímetro: tensões dos nós da ponte e do amplificador nos pinos A0 a A5 |
 | `firmware/teste_sensores/` | Firmware dos sensores (Pt100 + DS18B20), aquecedor desligado |
 | `scripts/monitor_serial.py` | Monitor serial: mostra, grava em `dados/` e envia comandos |
 | `dados/` | Logs dos ensaios (`.tsv`), com índice em [`dados/README.md`](dados/README.md) |

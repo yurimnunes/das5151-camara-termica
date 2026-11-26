@@ -5,15 +5,17 @@
 - [ ] Refazer simulações no LTspice com os componentes finais e trocar `lt_esq_acion.png`, `lt_formas_acion.png` e `lt_esq_pt100.png` (ver [Simulações](04-simulacoes.md#status-das-figuras))
 - [ ] Remover o aviso em vermelho "[A FAZER ...]" do fim de `relatorio/secoes/07-acionamento.tex`
 - [ ] Trazer para o repositório os arquivos `.asc` do LTspice (`simulacoes_ltspice_final.zip`)
+- [ ] Atualizar o relatório para o LM324: seção 05 (medição interna), lista de componentes, novo esquemático no lugar de `esq_pt100_ina125.png` (rascunho em `docs/referencias/esq_pt100_lm324.png`) e simulação do circuito novo. Avisar o professor da troca
 
 ## Montagem e testes
 
 Roteiro detalhado em [06-testes-bancada.md](06-testes-bancada.md).
 
-- [ ] Parte 1: sensores (ponte + INA125P e DS18B20) com `firmware/teste_sensores`
+- [x] Parte 1: sensores (ponte + amplificador com LM324 e DS18B20) com `firmware/teste_sensores` ([ensaio 02](ensaios/02-lm324-2026-11-26.md))
   - [x] DS18B20
   - [x] Ponte a 3 fios (Vab cerca de +10 mV)
-  - [ ] **Trocar o INA125P** (o atual não opera; ver [ensaio 01](ensaios/01-sensores-2026-11-26.md)) e medir de novo com `firmware/teste_nos`
+  - [x] INA125P diagnosticado como queimado ([ensaio 01](ensaios/01-sensores-2026-11-26.md)). Sem outro no laboratório: substituído por amplificador de instrumentação com LM324 ([`referencias/lm324.md`](referencias/lm324.md))
+  - [x] LM324 montado e testado: A0 = 1,285 V parado (offset de cerca de 3 °C), ruído ≤ 1 contagem, os dois Pt100 fazem a saída subir ([ensaio 02](ensaios/02-lm324-2026-11-26.md))
 - [ ] Parte 2: acionamento
 - [ ] Parte 3: sistema completo
 - [ ] Confirmar o fio de terra da sonda DS18B20 com multímetro antes de energizar

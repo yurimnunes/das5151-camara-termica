@@ -43,3 +43,12 @@ Ensaio 01, sensores (2026-11-26). Relatório: [`docs/ensaios/01-sensores-2026-11
 | `015942_ina-pinos-2` | INA 6 | INA 7 | INA 8 | INA 9 | INA 2 | entradas ok, SLEEP 5 V; pino 8 = 2,033 (devia seguir o pino 6, 2,044) |
 | `021847_ina-pinos-3` | INA 1 | INA 3 | INA 13 | INA 10 | INA 8 | V+ 5 V, V− 0 V; VREFBG 0,332 V (esperado cerca de 1,24); VO 0,058 |
 | `022533_ina-pinos-4-rg` | INA 1 | INA 3 | INA 13 | INA 10 | INA 8 | após mexer no RG: **sem mudança** (VREFBG 0,332; VO 0,058; pino 8 = 2,028) |
+
+Ensaio 02, medição interna com LM324 (2026-11-26). Relatório: [`docs/ensaios/02-lm324-2026-11-26.md`](../docs/ensaios/02-lm324-2026-11-26.md).
+
+### Firmware `teste_sensores` com LM324 (A0 = saída do filtro, D2 = DS18B20)
+
+| Log | Situação | Resultado |
+|---|---|---|
+| `102800_lm324-1` | copiado do Serial Monitor da IDE (sem horário do PC; início aproximado 10:28). Parado até 147 s, depois os dois Pt100 seguros com a mão | A0 1,285 V parado ✅; sobe até 1,505 V e 1,549 V ao segurar cada Pt100 ✅; DS18B20 25,6 a 25,9 °C ✅ |
+
