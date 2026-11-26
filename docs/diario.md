@@ -4,6 +4,12 @@ Entradas mais recentes no topo.
 
 ## 2026-11-26
 
+* Diagnóstico da medição interna com o Arduino como voltímetro (`firmware/teste_nos`), detalhes no [ensaio 01](ensaios/01-sensores-2026-11-26.md):
+  * Componente solto deixava a ponte sem 5 V.
+  * Pt100 A ligado pelos dois fios do par (mesma ponta do sensor) aparecia como curto.
+  * Fio do VIN+ estava no ponto do F.
+  * Depois de corrigir: **ponte certa a 2 e a 3 fios, Vab cerca de +10 mV** (esperado +9,7 mV).
+  * Em aberto: saída do INA125P parada em cerca de 0,06 V.
 * Primeiro teste com o Uno R3 (`/dev/ttyACM0`), firmware `teste_sensores`, log `dados/2026-11-26_001655_sensores.tsv` (314 leituras, cerca de 5 min):
   * DS18B20 ok: detectado, 25,75 a 25,87 °C estável.
   * Pt100 sem sinal: A0 preso em 4,8 a 5,0 contagens (0,024 V), esperado cerca de 355 (1,74 V). Suspeitas: INA sem alimentação, VIN+/VIN− trocados (Vab negativo satura em 0 V), filtro mal ligado ou A0 desconectado. Circuito em revisão; sem multímetro no momento.
