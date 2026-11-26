@@ -50,7 +50,7 @@ O PDF sai em `build/main.pdf`, fora da pasta do relatório.
 
 ## Levar para o Overleaf
 
-O GitHub é a fonte oficial. O Overleaf serve para quem prefere editar ou visualizar por lá.
+O GitHub é a fonte oficial. O Overleaf serve para quem prefere editar ou visualizar por lá. O zip é gerado só quando alguém pede, não a cada mudança no relatório.
 
 1. Na raiz do repositório, rodar `sh scripts/overleaf-zip.sh`. Ele gera `build/relatorio-overleaf.zip` com o `relatorio/` do **último commit**. Mudanças ainda não commitadas ficam de fora, e o script avisa quando houver alguma. Sem o script, dá no mesmo: `git archive --format=zip -o relatorio-overleaf.zip HEAD:relatorio`.
 2. No Overleaf: *New Project → Upload Project* e escolher o zip. O Overleaf detecta o `main.tex` e compila direto.
