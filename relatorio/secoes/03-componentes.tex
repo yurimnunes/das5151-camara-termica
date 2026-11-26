@@ -1,0 +1,38 @@
+% Seção 3: Lista de componentes
+
+\section{Lista de componentes}
+
+A Tabela~\ref{tab:componentes} apresenta os componentes especificados, com seus modelos e funções.
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\caption{Componentes especificados para o projeto.}
+\label{tab:componentes}
+\begin{tabularx}{\textwidth}{C{0.6cm} L L}
+\toprule
+\textbf{\#} & \textbf{Componente / modelo} & \textbf{Função} \\
+\midrule
+1  & Caixa de EPS pequena (cerca de 4 a 6\,L), com tampa e paredes $\geq$ 20\,mm & Câmara térmica \\
+2  & Placa com três resistores de fio de 15\,$\Omega$/20\,W ligados em paralelo (5\,$\Omega$) & Aquecimento (12\,V $\rightarrow$ $\approx$2,2\,A $\rightarrow$ $\approx$24\,W) \\
+3  & 2$\times$ Pt100 com ligação a 3 fios & Medição da temperatura interna (braços opostos da ponte) \\
+4  & 2$\times$ resistor 100\,$\Omega$ 1\,\% & Completam a ponte de Wheatstone (equilíbrio em 0\,\ensuremath{^\circ}C) \\
+5  & Resistores 1,5\,k$\Omega$ e 1\,k$\Omega$ & Limitam a corrente nos Pt100 ($\approx$0,96\,mA) e ajustam a tensão de modo comum da ponte ($\approx$2\,V) \\
+6  & Amplificador de instrumentação INA125P + $R_G$ = 330\,$\Omega$ & Amplificação do sinal da ponte ($G \approx 186$) \\
+7  & Sensor digital DS18B20 em sonda de inox à prova d'água (1-Wire, cabo de 90\,cm) + resistor de \textit{pull-up} 3,3\,k$\Omega$ & Medição da temperatura ambiente \\
+8  & Filtro RC (1\,k$\Omega$ + 100\,$\mu$F) & Filtragem anti-\textit{aliasing} da entrada A0 \\
+9  & Optoacoplador PC817 + resistor 680\,$\Omega$ & Isolamento entre o Arduino e o circuito de potência; limitação da corrente no LED ($\approx$5,6\,mA) \\
+10 & Transistor Darlington NPN TIP122 + dissipador TO-220 com pasta térmica & Chaveamento PWM do aquecedor \\
+11 & Resistor 3,3\,k$\Omega$ & Polarização da saída do optoacoplador e corrente de base do TIP122 \\
+12 & Resistor 22\,k$\Omega$ (\textit{pull-down}) & Mantém o TIP122 em corte com o optoacoplador desligado \\
+13 & Diodo 1N4148 & Roda livre, em antiparalelo com o aquecedor \\
+14 & Ventoinha 12\,V, 120$\times$120$\times$25\,mm (Rise Mode Wind W1) & Homogeneização do ar interno \\
+15 & Arduino Uno R3 (ATmega328P) & Aquisição dos sinais, controle e geração do PWM \\
+16 & Fonte de bancada de 2 canais (12\,V e 12\,V) & Alimentação do aquecedor e da ventoinha \\
+17 & Capacitores cerâmicos 100\,nF & Desacoplamento da alimentação do INA125P e do DS18B20 \\
+18 & Protoboard, barra de terminais e cabos (fio $\geq$ 0,5\,mm$^2$ no circuito do aquecedor) & Montagem dos circuitos \\
+19 & \textit{(Opcional)} Protetor térmico KSD301 70\,\ensuremath{^\circ}C, normalmente fechado & Proteção contra sobretemperatura, independente do software \\
+\bottomrule
+\end{tabularx}
+\end{table}

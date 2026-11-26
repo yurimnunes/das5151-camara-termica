@@ -1,0 +1,14 @@
+% Seção 1: Descrição do projeto
+
+\section{Descrição do projeto}
+
+O projeto consiste no controle da temperatura de uma câmara térmica confinada, construída em poliestireno expandido (EPS) e aquecida por resistores de potência acionados por modulação por largura de pulso (PWM). A temperatura interna é medida por dois termorresistores Pt100 com ligação a 3 fios, montados em uma ponte de Wheatstone cujo sinal é amplificado por um amplificador de instrumentação. A temperatura ambiente, principal perturbação do sistema, é medida por um sensor digital DS18B20 posicionado fora da câmara. Uma ventoinha mantém o ar interno homogêneo, e um Arduino Uno realiza a aquisição dos sinais e a geração do PWM.
+
+Em relação à proposta inicial, foram feitas as seguintes alterações:
+
+\begin{itemize}
+  \item \textbf{Medição da temperatura ambiente:} incluída conforme sugerido na avaliação da proposta, para permitir uma compensação antecipativa (\textit{feedforward}) da perturbação. É feita com um sensor DS18B20 fornecido pelo professor.
+  \item \textbf{Componentes adequados à disponibilidade do LMM:} o amplificador de instrumentação passou a ser o INA125P, que opera com alimentação única de 5\,V e dispensa fonte simétrica; o acionamento passou a ser feito por um optoacoplador PC817 e um transistor Darlington TIP122; o aquecedor é uma placa com três resistores de potência disponível no laboratório; e os resistores e o diodo do circuito foram escolhidos entre os valores disponíveis.
+  \item \textbf{Ligação a 3 fios:} adotada a configuração em que um dos fios do par de cada Pt100 leva o sinal até o amplificador, conforme orientação do professor (Seção~\ref{sec:pt100}).
+  \item \textbf{Realimentação de corrente:} a medição de corrente por resistor \textit{shunt} prevista na proposta foi retirada nesta etapa. O optoacoplador isola o circuito de potência do microcontrolador, e a medição da corrente exigiria compartilhar novamente as referências de terra. A medição poderá ser reavaliada nas próximas etapas.
+\end{itemize}

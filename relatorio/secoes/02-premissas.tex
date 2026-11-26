@@ -1,0 +1,11 @@
+% Seção 2: Premissas de projeto
+
+\section{Premissas de projeto}
+
+\begin{itemize}
+  \item \textbf{Faixa de setpoint:} da temperatura ambiente até cerca de 50\,\ensuremath{^\circ}C, abaixo da temperatura em que o EPS começa a amolecer (cerca de 80\,\ensuremath{^\circ}C).
+  \item \textbf{Faixa de medição interna:} aproximadamente 12\,\ensuremath{^\circ}C a 61\,\ensuremath{^\circ}C, que cobre com folga a faixa de operação.
+  \item \textbf{Câmara:} caixa de EPS de pequeno volume (cerca de 4 a 6\,L), que reduz as perdas térmicas e torna a dinâmica mais rápida.
+  \item \textbf{Microcontrolador:} Arduino Uno R3, com conversor A/D de 10 bits e referência de 5\,V. A mesma tensão de 5\,V alimenta a ponte, o INA125P e o DS18B20.
+  \item \textbf{Alimentação de potência:} fonte de bancada de dois canais, ambos em 12\,V: o canal 1 alimenta o aquecedor, com limite de corrente de 2,6\,A, e o canal 2 alimenta a ventoinha.
+\end{itemize}

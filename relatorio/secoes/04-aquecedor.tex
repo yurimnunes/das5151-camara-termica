@@ -1,0 +1,17 @@
+% Seção 4: Dimensionamento do aquecedor
+
+\section{Dimensionamento do aquecedor}
+
+O aquecedor é uma placa com três resistores de fio de 15\,$\Omega$/20\,W ligados em paralelo, disponível no laboratório:
+\begin{equation}
+  R_{eq} = \frac{15}{3} = 5\ \Omega.
+\end{equation}
+Considerando a queda de aproximadamente 1,1\,V no TIP122 saturado (Seção~\ref{sec:acionamento}), a tensão sobre o aquecedor com alimentação de 12\,V e PWM em 100\,\% é de cerca de 10,9\,V, o que resulta em
+\begin{equation}
+  I \approx \frac{10{,}9}{5} \approx 2{,}2\ \text{A}, \qquad
+  P_{total} = \frac{10{,}9^2}{5} \approx 24\ \text{W}, \qquad
+  P_{15\,\Omega} = \frac{10{,}9^2}{15} \approx 8\ \text{W}.
+\end{equation}
+Cada resistor opera a cerca de 40\,\% da sua potência nominal. A tensão de 12\,V foi escolhida para manter essa folga: em 15\,V, cada resistor dissiparia cerca de 13\,W, e em 24\,V, cerca de 35\,W, acima do nominal.
+
+Seguindo a orientação de usar uma câmara pequena, a caixa terá volume interno de cerca de 4 a 6\,L, por exemplo 20\,$\times$\,15\,$\times$\,15\,cm. A área interna fica em torno de 0,17\,m$^2$, e a condutância térmica global, somando as perdas pela tampa e pelas passagens de cabos, é estimada entre 0,3 e 0,6\,W/K. Os 24\,W disponíveis permitiriam, em regime, uma elevação de 40 a 80\,K acima do ambiente, bem mais que os 25\,K necessários para o setpoint de 50\,\ensuremath{^\circ}C com ambiente de 25\,\ensuremath{^\circ}C. Por isso, o sinal de controle será limitado por software, e o aquecimento é desligado se a temperatura interna passar de 60\,\ensuremath{^\circ}C, para que o EPS nunca se aproxime de 80\,\ensuremath{^\circ}C. O valor real da condutância será obtido em um ensaio de degrau em malha aberta, previsto para a próxima etapa.
