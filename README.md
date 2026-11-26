@@ -31,6 +31,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 6. [Testes de bancada](docs/06-testes-bancada.md): roteiro por partes com valores esperados
    * Ensaios realizados: [`docs/ensaios/`](docs/ensaios/), um arquivo por ensaio com resultados e checklist
 7. [Diário](docs/diario.md): registro datado do andamento
+8. [Decisão pendente: mecânica](docs/decisao-mecanica.md): duas versões da montagem da câmara, a decidir
 
 ## Compilar o relatório
 

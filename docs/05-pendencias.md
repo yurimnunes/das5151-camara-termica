@@ -18,6 +18,7 @@ Roteiro detalhado em [06-testes-bancada.md](06-testes-bancada.md).
   - [x] LM324 montado e testado: A0 = 1,285 V parado (offset de cerca de 3 °C), ruído ≤ 1 contagem, os dois Pt100 fazem a saída subir ([ensaio 02](ensaios/02-lm324-2026-11-26.md))
 - [ ] Parte 2: acionamento
 - [ ] Parte 3: sistema completo
+- [ ] **Decidir a montagem mecânica** (ventoinha, tamanho da caixa, posição dos Pt100): duas versões em [decisao-mecanica.md](decisao-mecanica.md)
 - [ ] Confirmar o fio de terra da sonda DS18B20 com multímetro antes de energizar
 - [ ] Medir VCE do TIP122 saturado; se passar de 2 V, trocar R1 para 330 Ω
 - [ ] Calibração em 2 pontos do Pt100 com termômetro de referência e atualizar `SENS_V_POR_C` e `V_REF_25C`
