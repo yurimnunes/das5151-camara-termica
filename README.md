@@ -14,6 +14,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 | `Primeira_Entrega_Projeto_Final___Instrumentação/` | Relatório da primeira entrega em LaTeX (`main.tex`) e figuras |
 | `teste_camara.ino` | Firmware de teste dos módulos (sensores e PWM) |
 | `docs/` | Resumos e anotações do projeto |
+| `AGENTS.md` / `CLAUDE.md` | Contexto e regras para agentes de IA |
 
 ## Documentação
 

@@ -16,6 +16,7 @@ Esquema: [`esq_pt100_ina125.png`](../Primeira_Entrega_Projeto_Final___Instrument
 
 * Ponte: Pt100 A e Pt100 B em braços opostos, completada por 2 resistores de 100 Ω (equilíbrio em 0 °C). Sensores opostos dobram a sensibilidade.
 * Rtop 1,5 kΩ e Rbot 1 kΩ em série com a ponte: corrente total de 1,92 mA (0,96 mA por Pt100) e modo comum perto de 2 V.
+* Tensão sobre a ponte: 192,3 mV a 0 °C (1,923 mA × 100 Ω). Sobe com a temperatura, porque a resistência dos Pt100 aumenta, e fica perto de 200 mV na faixa de operação. A simulação já considera isso, e a calibração em 2 pontos absorve qualquer diferença de ganho.
 * Sensibilidade da ponte: cerca de 0,37 mV/°C.
 * INA125P com RG = 330 Ω: G = 4 + 60 kΩ / RG ≈ 186.
 * Saída: cerca de 68,7 mV/°C, resolução de 0,071 °C por LSB.
