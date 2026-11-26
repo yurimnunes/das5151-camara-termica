@@ -17,7 +17,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 | `firmware/teste_nos/` | Arduino como voltímetro: tensões dos nós da ponte e do INA nos pinos A0 a A5 |
 | `firmware/teste_sensores/` | Firmware dos sensores (Pt100 + DS18B20), aquecedor desligado |
 | `scripts/monitor_serial.py` | Monitor serial: mostra, grava em `dados/` e envia comandos |
-| `dados/` | Logs dos ensaios (`.tsv`) |
+| `dados/` | Logs dos ensaios (`.tsv`), com índice em [`dados/README.md`](dados/README.md) |
 | `docs/` | Resumos e anotações do projeto |
 | `AGENTS.md` / `CLAUDE.md` | Contexto e regras para agentes de IA |
 
