@@ -2,6 +2,10 @@
 
 Entradas mais recentes no topo.
 
+## 2026-11-26
+
+* Decidido testar por partes, começando pela medição interna. Criados `firmware/teste_ponte/` (só A0, D3 forçado em LOW) e o roteiro `docs/06-testes-bancada.md` com valores esperados de cada nó da ponte.
+
 ## 2026-11-25
 
 * Ambiente Linux preparado: `arduino-cli` 1.6.0, core `arduino:avr` 1.8.8, OneWire 2.3.8, DallasTemperature 4.0.6. Sketch movido para `firmware/teste_camara/` e compilando (25 % da flash, 12 % da RAM).
