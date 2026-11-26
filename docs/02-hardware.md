@@ -12,7 +12,7 @@
 
 ## Medição da temperatura interna (Pt100 + INA125P)
 
-Esquema: [`esq_pt100_ina125.png`](../Primeira_Entrega_Projeto_Final___Instrumentação/esq_pt100_ina125.png)
+Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png)
 
 * Ponte: Pt100 A e Pt100 B em braços opostos, completada por 2 resistores de 100 Ω (equilíbrio em 0 °C). Sensores opostos dobram a sensibilidade.
 * Rtop 1,5 kΩ e Rbot 1 kΩ em série com a ponte: corrente total de 1,92 mA (0,96 mA por Pt100) e modo comum perto de 2 V.
@@ -28,7 +28,7 @@ Esquema: [`esq_pt100_ina125.png`](../Primeira_Entrega_Projeto_Final___Instrument
 
 ## Temperatura ambiente (DS18B20)
 
-Esquema: [`esq_ds18b20.png`](../Primeira_Entrega_Projeto_Final___Instrumentação/esq_ds18b20.png)
+Esquema: [`esq_ds18b20.png`](../relatorio/figuras/esq_ds18b20.png)
 
 * Sonda inox à prova d'água, cabo de 90 cm, barramento 1-Wire.
 * Fios: vermelho em 5 V, dados em D2, terra no GND. A sonda tem fios vermelho, azul e preto: **confirmar o terra com multímetro em modo diodo antes de energizar**, inversão queima o sensor.
@@ -38,7 +38,7 @@ Esquema: [`esq_ds18b20.png`](../Primeira_Entrega_Projeto_Final___Instrumentaçã
 
 ## Acionamento do aquecedor (PC817 + TIP122)
 
-Esquema: [`esq_acionamento.png`](../Primeira_Entrega_Projeto_Final___Instrumentação/esq_acionamento.png)
+Esquema: [`esq_acionamento.png`](../relatorio/figuras/esq_acionamento.png)
 
 * LED do PC817: R1 = 680 Ω, IF ≈ 5,6 mA.
 * Fototransistor: R2 = 3,3 kΩ do 12 V para o coletor, emissor na base do TIP122. Com CTR mínimo de 50 %, entrega cerca de 2,7 mA à base.
@@ -51,7 +51,7 @@ Esquema: [`esq_acionamento.png`](../Primeira_Entrega_Projeto_Final___Instrumenta
 
 ## Estrutura mecânica
 
-Esboço: [`esboco_mecanico.png`](../Primeira_Entrega_Projeto_Final___Instrumentação/esboco_mecanico.png)
+Esboço: [`esboco_mecanico.png`](../relatorio/figuras/esboco_mecanico.png)
 
 * Placa de resistores suspensa por suporte metálico preso à tampa, sem tocar o EPS.
 * Ventoinha em pé junto a uma parede, soprando sobre a placa.
@@ -62,4 +62,4 @@ Esboço: [`esboco_mecanico.png`](../Primeira_Entrega_Projeto_Final___Instrumenta
 
 ## Lista de componentes
 
-Tabela completa na Seção 3 do [`main.tex`](../Primeira_Entrega_Projeto_Final___Instrumentação/main.tex).
+Tabela completa em [`relatorio/secoes/03-componentes.tex`](../relatorio/secoes/03-componentes.tex).

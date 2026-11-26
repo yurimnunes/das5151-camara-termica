@@ -11,7 +11,8 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 
 | Caminho | Conteúdo |
 |---|---|
-| `Primeira_Entrega_Projeto_Final___Instrumentação/` | Relatório da primeira entrega em LaTeX (`main.tex`) e figuras |
+| `relatorio/` | Relatório em LaTeX, um arquivo por seção. Mapa em [`relatorio/README.md`](relatorio/README.md) |
+| `scripts/overleaf-zip.sh` | Gera o zip do relatório para subir no Overleaf |
 | `teste_camara.ino` | Firmware de teste dos módulos (sensores e PWM) |
 | `docs/` | Resumos e anotações do projeto |
 | `AGENTS.md` / `CLAUDE.md` | Contexto e regras para agentes de IA |
@@ -28,6 +29,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 ## Compilar o relatório
 
 ```sh
-cd Primeira_Entrega_Projeto_Final___Instrumentação
-latexmk -pdf main.tex
+cd relatorio && latexmk -pdf -outdir=../build main.tex
 ```
+
+PDF em `build/main.pdf`. Para o Overleaf, ver [`relatorio/README.md`](relatorio/README.md#levar-para-o-overleaf).

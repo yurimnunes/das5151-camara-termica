@@ -3,7 +3,7 @@
 ## Primeira entrega
 
 - [ ] Refazer simulações no LTspice com os componentes finais e trocar `lt_esq_acion.png`, `lt_formas_acion.png` e `lt_esq_pt100.png` (ver [Simulações](04-simulacoes.md#status-das-figuras))
-- [ ] Remover o aviso em vermelho "[A FAZER ...]" do fim da Seção 7 do `main.tex`
+- [ ] Remover o aviso em vermelho "[A FAZER ...]" do fim de `relatorio/secoes/07-acionamento.tex`
 - [ ] Trazer para o repositório os arquivos `.asc` do LTspice (`simulacoes_ltspice_final.zip`)
 
 ## Montagem e testes
@@ -21,4 +21,4 @@
 
 ## Organização do repositório
 
-- A pasta do relatório tem 116 PNGs mas o `main.tex` usa só 10. As outras 106 (`fig*`, `ex*-m=*`, `bif*`, `lr_*`, `pi_*`, `controlep*` etc.) parecem sobras de relatórios de outras disciplinas. Avaliar mover para fora do projeto.
+- [x] Remover as 106 imagens que não eram do projeto e separar o relatório em um arquivo por seção (`relatorio/`)

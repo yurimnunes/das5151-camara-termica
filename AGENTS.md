@@ -11,15 +11,16 @@ Projeto final de DAS5151 Instrumentação em Controle (UFSC). Controle de temper
 1. `README.md`: estrutura e índice
 2. `docs/01-visao-geral.md` a `docs/05-pendencias.md`: resumos por tema
 3. `docs/diario.md`: o que mudou e quando
+4. `relatorio/README.md`: mapa do relatório (qual arquivo tem cada seção, figuras e labels) e regras para editar. **Leia antes de mexer no LaTeX** e abra só o arquivo da seção que precisa mudar.
 
 ## Fonte da verdade
 
-* `Primeira_Entrega_Projeto_Final___Instrumentação/main.tex` manda em valores de componentes e cálculos. Se os docs divergirem dele, o `.tex` vence e os docs devem ser corrigidos.
+* O relatório em `relatorio/` (`preambulo.tex` + `secoes/*.tex`) manda em valores de componentes e cálculos. Se os docs divergirem dele, o `.tex` vence e os docs devem ser corrigidos.
+* Ao mudar a estrutura do relatório (seção, figura, label), atualizar a tabela do `relatorio/README.md` no mesmo commit.
 * `teste_camara.ino` é o firmware de teste (sem malha fechada ainda).
 
 ## Armadilhas conhecidas
 
-* A pasta do relatório tem 116 PNGs, mas o `main.tex` só usa 10. O resto (`fig*`, `ex*-m=*`, `bif*`, `lr_*`, `pi_*`, `controlep*`, `esq_lm35.png` etc.) é sobra de outros trabalhos. Não usar como referência do projeto.
 * `lt_esq_acion.png`, `lt_formas_acion.png` e `lt_esq_pt100.png` são de uma versão antiga do circuito (24 V, 2 × 25 Ω, filtro 10 kΩ/10 µF). O texto do `.tex` já usa os valores finais. Detalhes em `docs/04-simulacoes.md`.
 * Os arquivos `.asc` do LTspice (`simulacoes_ltspice_final.zip`) não estão no repositório.
 * Tensão sobre a ponte: 192,3 mV a 0 °C (1,923 mA × 100 Ω), sobe para perto de 200 mV na faixa de operação. Não é um valor fixo.
@@ -29,9 +30,10 @@ Projeto final de DAS5151 Instrumentação em Controle (UFSC). Controle de temper
 Compilar o relatório sem sujar a pasta de fontes:
 
 ```sh
-cd Primeira_Entrega_Projeto_Final___Instrumentação
-latexmk -pdf -outdir=../build main.tex
+cd relatorio && latexmk -pdf -outdir=../build main.tex
 ```
+
+Zip para o Overleaf (só arquivos versionados no git): `scripts/overleaf-zip.sh` → `build/relatorio-overleaf.zip`.
 
 Firmware: IDE do Arduino com as bibliotecas OneWire e DallasTemperature. Serial em 9600 baud.
 
@@ -41,4 +43,5 @@ Firmware: IDE do Arduino com as bibliotecas OneWire e DallasTemperature. Serial 
 * Não usar travessão como pontuação em texto corrido.
 * Commits com gitmoji (`:memo:` docs, `:sparkles:` novidade, `:bug:` correção). Sem linha de coautoria de IA.
 * Ao concluir algo relevante: adicionar entrada datada no topo de `docs/diario.md` e marcar o item em `docs/05-pendencias.md`.
-* Imagens usadas pelo `.tex` ficam versionadas. Não colocar PNG no `.gitignore`.
+* Imagens usadas pelo `.tex` ficam versionadas em `relatorio/figuras/`. Não colocar PNG no `.gitignore`.
+* Relatório sem caminhos `../` em `\input`/`\includegraphics`, para continuar compatível com o Overleaf.
