@@ -2,6 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+**Status:** concluído (commits `bbeb516` a `4d6e736` e correções da revisão final). A pasta antiga citada abaixo já foi renomeada para `relatorio/`.
+
+
 **Goal:** Reorganizar o relatório em `relatorio/` com preâmbulo, uma seção por arquivo e figuras em `figuras/`, documentar cada parte em um `.md`, sem mudar nada no PDF gerado.
 
 **Architecture:** `relatorio/main.tex` fica só com `\documentclass`, `\input{preambulo}` e a lista de `\input{secoes/...}`. Cada `\section` do `main.tex` atual vira um arquivo em `relatorio/secoes/`. As 10 imagens usadas vão para `relatorio/figuras/`; as 106 não usadas saem do repo (recuperáveis no commit `0a1c345`). Estrutura compatível com Overleaf: `main.tex` na raiz da pasta, caminhos relativos a ela.

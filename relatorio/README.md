@@ -7,7 +7,7 @@ Relatório do projeto, dividido em um arquivo por seção. Para mudar uma seçã
 ```
 relatorio/
   main.tex        documento raiz: classe, preâmbulo e ordem das seções
-  preambulo.tex   pacotes, margens, cabeçalho, \graphicspath
+  preambulo.tex   pacotes, margens, cabeçalho, \graphicspath, espaçamento 1,5
   secoes/         um arquivo por seção (tabela abaixo)
   figuras/        todas as imagens usadas no relatório
 ```
@@ -16,7 +16,7 @@ relatorio/
 
 | Seção | Arquivo | Conteúdo | Figuras | Labels definidos |
 |---|---|---|---|---|
-| Capa | `secoes/00-capa.tex` | Capa (UFSC, autores, professor), sumário, estilo das caixas `tcolorbox` | `logoUFSCsimples` | |
+| Capa | `secoes/00-capa.tex` | Capa (UFSC, autores, professor) e sumário | `logoUFSCsimples` | |
 | 1 | `secoes/01-descricao.tex` | O que é o projeto e mudanças em relação à proposta | | |
 | 2 | `secoes/02-premissas.tex` | Faixa de setpoint, faixa de medição, câmara, Arduino, fonte | | |
 | 3 | `secoes/03-componentes.tex` | Tabela com os 19 componentes | | `tab:componentes` |
@@ -31,7 +31,8 @@ Referências entre arquivos: a Seção 1 cita `sec:pt100` (Seção 5), a 4 cita 
 
 ## Regras
 
-* **Nova seção:** criar `secoes/NN-nome.tex` (número na ordem, nome sem acento), começar com `% Seção N: Título` e adicionar `\input{secoes/NN-nome}` no `main.tex`.
+* **Mapa sempre atualizado:** ao criar, renomear ou apagar uma seção, figura ou label, atualizar a tabela acima no mesmo commit.
+* **Nova seção:** criar `secoes/NN-nome.tex` (número na ordem, nome sem acento), começar com `% Seção N: Título` e adicionar `\input{secoes/NN-nome}` no `main.tex`. Para inserir no meio, renumerar os arquivos seguintes com `git mv` no mesmo commit.
 * **Nova figura:** salvar em `figuras/` sem acento e sem espaço, com prefixo pelo tipo: `esq_` (esquemático), `lt_` (LTspice), `graf_` (gráfico de dados), `foto_` (foto da montagem). Incluir só pelo nome, sem pasta: `\includegraphics{esq_exemplo.png}`.
 * **Labels:** `sec:`, `fig:`, `tab:`, `eq:` + nome curto.
 * **Pacotes:** só no `preambulo.tex`.
@@ -51,7 +52,13 @@ O PDF sai em `build/main.pdf`, fora da pasta do relatório.
 
 O GitHub é a fonte oficial. O Overleaf serve para quem prefere editar ou visualizar por lá.
 
-1. Na raiz do repositório, rodar `scripts/overleaf-zip.sh`. Ele gera `build/relatorio-overleaf.zip`. Só entram arquivos já adicionados ao git (`git add`), então arquivos temporários da compilação ficam de fora.
+1. Na raiz do repositório, rodar `sh scripts/overleaf-zip.sh`. Ele gera `build/relatorio-overleaf.zip` com o `relatorio/` do **último commit**. Mudanças ainda não commitadas ficam de fora, e o script avisa quando houver alguma. Sem o script, dá no mesmo: `git archive --format=zip -o relatorio-overleaf.zip HEAD:relatorio`.
 2. No Overleaf: *New Project → Upload Project* e escolher o zip. O Overleaf detecta o `main.tex` e compila direto.
 
-**Trazer edições do Overleaf de volta:** no Overleaf, *Menu → Download → Source*, descompactar por cima de `relatorio/` e conferir com `git diff` antes do commit. O Overleaf não sincroniza sozinho com o GitHub (só no plano pago). Por isso, combinem quem está editando onde, para não sobrescrever o trabalho de outra pessoa.
+**Trazer edições do Overleaf de volta:**
+
+1. No Overleaf, *Menu → Download → Source*.
+2. Apagar o conteúdo de `relatorio/` (o git guarda tudo) e descompactar o zip ali. Assim, arquivos apagados ou renomeados no Overleaf também somem aqui.
+3. Conferir com `git status` (arquivos novos ou apagados) e `git diff` (mudanças), depois `git add relatorio` e commit.
+
+O Overleaf não sincroniza sozinho com o GitHub (só no plano pago). Por isso, combinem quem está editando onde, para não sobrescrever o trabalho de outra pessoa.

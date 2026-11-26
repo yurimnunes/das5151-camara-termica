@@ -33,7 +33,7 @@ Compilar o relatório sem sujar a pasta de fontes:
 cd relatorio && latexmk -pdf -outdir=../build main.tex
 ```
 
-Zip para o Overleaf (só arquivos versionados no git): `scripts/overleaf-zip.sh` → `build/relatorio-overleaf.zip`.
+Zip para o Overleaf (conteúdo do último commit; avisa se `relatorio/` tiver mudanças não commitadas): `sh scripts/overleaf-zip.sh` → `build/relatorio-overleaf.zip`.
 
 Firmware: IDE do Arduino com as bibliotecas OneWire e DallasTemperature. Serial em 9600 baud.
 
