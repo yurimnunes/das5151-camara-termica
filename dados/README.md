@@ -1,6 +1,6 @@
 # Dados dos ensaios
 
-Cada arquivo `.tsv` é um log do `scripts/monitor_serial.py`. Primeira coluna: horário do PC. O resto é a linha que o Arduino mandou; comandos enviados aparecem como `# comando (...)`.
+Cada arquivo `.tsv` é um log do `scripts/monitor_serial.py`. Primeira coluna: horário do PC (exceção: logs copiados do Serial Monitor da IDE, marcados no índice, não têm essa coluna; o `resumo_log.py` lida com os dois casos). O resto é a linha que o Arduino mandou; comandos enviados aparecem como `# comando (...)`.
 
 **Atenção com o `firmware/teste_nos`:** os nomes das colunas (`A1_T`, `A2_F`, ...) são fixos no firmware, mas os jumpers mudaram de lugar entre os ensaios. **Use a tabela abaixo para saber o que cada canal media em cada log.** A coluna `a_b_mV` é sempre A3 − A4 e só tem significado quando A3 e A4 estavam nos nós a e b.
 

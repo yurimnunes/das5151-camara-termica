@@ -15,7 +15,7 @@ Projeto final de DAS5151 Instrumentação em Controle (UFSC). Controle de temper
 
 ## Fonte da verdade
 
-* O relatório em `relatorio/` (`preambulo.tex` + `secoes/*.tex`) manda em valores de componentes e cálculos. Se os docs divergirem dele, o `.tex` vence e os docs devem ser corrigidos.
+* O relatório em `relatorio/` (`preambulo.tex` + `secoes/*.tex`) manda em valores de componentes e cálculos. Se os docs divergirem dele, o `.tex` vence e os docs devem ser corrigidos. **Exceção atual:** medição interna com LM324 (ver Armadilhas).
 * Ao mudar a estrutura do relatório (seção, figura, label), atualizar a tabela do `relatorio/README.md` no mesmo commit.
 * `firmware/teste_camara/teste_camara.ino` é o firmware de teste (sem malha fechada ainda).
 * `firmware/teste_sensores/teste_sensores.ino` testa só os sensores (Pt100 e DS18B20), com o aquecedor desligado. Os testes de bancada são feitos por partes, seguindo `docs/06-testes-bancada.md`. Não pular partes sem o usuário pedir.

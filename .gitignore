@@ -23,6 +23,9 @@ build/
 *.net
 *.log
 
+# ngspice: saída do wrdata (regenerável a partir do .cir)
+*.dat
+
 # Arduino: binários compilados
 *.hex
 *.elf

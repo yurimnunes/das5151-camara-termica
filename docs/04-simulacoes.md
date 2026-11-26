@@ -1,5 +1,7 @@
 # Simulações (LTspice)
 
+> **Medição interna com LM324 (2026-11-26):** o INA125P queimou e foi trocado por um amplificador de 3 amp-ops com LM324. A simulação nova (ngspice, G ≈ 119, 44,4 mV/°C) está em [`referencias/lm324.md`](referencias/lm324.md#simulação), netlist [`referencias/lm324_ponte.cir`](referencias/lm324_ponte.cir). A seção "Medição interna" abaixo é do projeto original com o INA125P e continua valendo para o relatório até ele ser atualizado.
+
 Modelos usados: INA125P pela topologia interna de 3 amp-ops, TIP122 como par Darlington com os resistores internos, PC817 como LED + fototransistor com CTR de 50 % (pior caso).
 
 ## Medição interna (Pt100)

@@ -9,13 +9,18 @@ import sys
 
 def resumo(path: str) -> None:
     header, rows = None, []
+    # Logs do monitor_serial.py têm o horário do PC na 1ª coluna; logs copiados
+    # do Serial Monitor da IDE não. O cabeçalho diz qual é o caso.
+    skip = 1
     with open(path, encoding="utf-8") as f:
         for line in f:
-            parts = line.rstrip("\n").split("\t")[1:]  # descarta o horário do PC
-            if not parts or parts[0].startswith("#"):
+            cols = line.rstrip("\n").split("\t")
+            if "tempo_s" in cols[:2]:
+                skip = cols.index("tempo_s")
+                header = cols[skip:]
                 continue
-            if parts[0] == "tempo_s":
-                header = parts
+            parts = cols[skip:]
+            if not parts or parts[0].startswith("#"):
                 continue
             if header and len(parts) == len(header) and parts[0].isdigit():
                 rows.append(parts)
