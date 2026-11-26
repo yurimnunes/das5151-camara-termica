@@ -42,3 +42,4 @@ Ensaio 01, sensores (2026-11-26). Relatório: [`docs/ensaios/01-sensores-2026-11
 | `015153_ina-pinos-1` | nó T | INA 6 | INA 7 | INA 8 | INA 9 | jumpers deslocados: pino 6 = 2,046, pino 7 = 2,034, pinos 8 e 9 = 2,033 |
 | `015942_ina-pinos-2` | INA 6 | INA 7 | INA 8 | INA 9 | INA 2 | entradas ok, SLEEP 5 V; pino 8 = 2,033 (devia seguir o pino 6, 2,044) |
 | `021847_ina-pinos-3` | INA 1 | INA 3 | INA 13 | INA 10 | INA 8 | V+ 5 V, V− 0 V; VREFBG 0,332 V (esperado cerca de 1,24); VO 0,058 |
+| `022533_ina-pinos-4-rg` | INA 1 | INA 3 | INA 13 | INA 10 | INA 8 | após mexer no RG: **sem mudança** (VREFBG 0,332; VO 0,058; pino 8 = 2,028) |
