@@ -12,7 +12,7 @@
 
 ## Medição da temperatura interna (Pt100 + INA125P)
 
-Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png)
+Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png). Pinagem do INA125P: [`referencias/ina125p.md`](referencias/ina125p.md)
 
 * Ponte: Pt100 A e Pt100 B em braços opostos, completada por 2 resistores de 100 Ω (equilíbrio em 0 °C). Sensores opostos dobram a sensibilidade.
 * Rtop 1,5 kΩ e Rbot 1 kΩ em série com a ponte: corrente total de 1,92 mA (0,96 mA por Pt100) e modo comum perto de 2 V.
