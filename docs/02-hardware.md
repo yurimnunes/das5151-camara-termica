@@ -49,6 +49,31 @@ Esquema: [`esq_acionamento.png`](../relatorio/figuras/esq_acionamento.png)
 * Caminho de 2,2 A (fonte, placa, TIP122, retorno) fora da protoboard, em barra de terminais com fio de pelo menos 0,5 mm².
 * Opcional: KSD301 70 °C NF em série com o aquecedor como proteção independente do software.
 
+### Ligações pino a pino
+
+| Lado | Ligação |
+|---|---|
+| Arduino | D3 → R1 680 Ω → PC817 pino 1 (ânodo); pino 2 (cátodo) → GND do Arduino |
+| Potência | PC817 pino 4 (coletor) → R2 3,3 kΩ → +12 V |
+| Potência | PC817 pino 3 (emissor) → base do TIP122; Rpd 22 kΩ da base ao GND da fonte |
+| TIP122 | face escrita para frente, pernas para baixo: **B, C, E** (aba = coletor) |
+| TIP122 | C → fio preto da placa; E → GND da fonte |
+| Placa | fio vermelho → +12 V (placa medida: 5 Ω) |
+| 1N4148 | em paralelo com a placa, faixa (cátodo) no +12 V |
+| Barra de terminais | TIP122 nos bornes 1 a 3 (B, C, E); só o jumper da base vem da protoboard |
+| Ventoinha | canal 2 da fonte: vermelho no +, preto no −, amarelo (sinal de rotação) sem ligar |
+
+### Valores esperados na montagem
+
+| PWM | Corrente média no aquecedor |
+|---|---|
+| 0 % | 0 A |
+| 30 % | cerca de 0,7 A |
+| 80 % | cerca de 1,8 A |
+| 100 % | cerca de 2,2 A, com VCE entre 1 e 1,5 V |
+
+Cerca de 7,8 W por resistor em 100 % (39 % do nominal de 20 W).
+
 ## Estrutura mecânica
 
 Esboço: [`esboco_mecanico.png`](../relatorio/figuras/esboco_mecanico.png)
