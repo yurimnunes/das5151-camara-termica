@@ -23,7 +23,7 @@ Projeto final de DAS5151 Instrumentação em Controle (UFSC). Controle de temper
 
 ## Armadilhas conhecidas
 
-* **Medição interna com LM324, relatório ainda com INA125P.** O INA125P queimou e foi trocado por um LM324 (detalhes em `docs/referencias/lm324.md`). Até o relatório ser atualizado, o `.tex` (seção 05, componentes e `esq_pt100_ina125.png`) ainda descreve o INA125P; nesse ponto os docs e o firmware estão à frente do relatório e valem eles.
+* **Medição interna com LM324, relatório ainda com INA125P.** O INA125P queimou e foi trocado por um LM324 (detalhes em `docs/referencias/lm324.md`). Checklist da atualização e das medidas pendentes em `docs/plano-lm324.md`. Até o relatório ser atualizado, o `.tex` (seção 05, componentes e `esq_pt100_ina125.png`) ainda descreve o INA125P; nesse ponto os docs e o firmware estão à frente do relatório e valem eles.
 * `lt_esq_acion.png`, `lt_formas_acion.png` e `lt_esq_pt100.png` são de uma versão antiga do circuito (24 V, 2 × 25 Ω, filtro 10 kΩ/10 µF). O texto do `.tex` já usa os valores finais. Detalhes em `docs/04-simulacoes.md`.
 * Os arquivos `.asc` do LTspice (`simulacoes_ltspice_final.zip`) não estão no repositório.
 * Tensão sobre a ponte: 192,3 mV a 0 °C (1,923 mA × 100 Ω), sobe para perto de 200 mV na faixa de operação. Não é um valor fixo.

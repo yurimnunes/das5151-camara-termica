@@ -5,7 +5,7 @@
 - [ ] Refazer simulações no LTspice com os componentes finais e trocar `lt_esq_acion.png`, `lt_formas_acion.png` e `lt_esq_pt100.png` (ver [Simulações](04-simulacoes.md#status-das-figuras))
 - [ ] Remover o aviso em vermelho "[A FAZER ...]" do fim de `relatorio/secoes/07-acionamento.tex`
 - [ ] Trazer para o repositório os arquivos `.asc` do LTspice (`simulacoes_ltspice_final.zip`)
-- [ ] Atualizar o relatório para o LM324: seção 05 (medição interna), lista de componentes, novo esquemático no lugar de `esq_pt100_ina125.png` (rascunho em `docs/referencias/esq_pt100_lm324.png`) e simulação do circuito novo. Avisar o professor da troca
+- [ ] Atualizar o relatório para o LM324 (checklist detalhado em [plano-lm324.md](plano-lm324.md), parte B): seção 05 (medição interna), lista de componentes, novo esquemático no lugar de `esq_pt100_ina125.png` (rascunho em `docs/referencias/esq_pt100_lm324.png`) e simulação do circuito novo. Avisar o professor da troca
 
 ## Montagem e testes
 
@@ -16,6 +16,7 @@ Roteiro detalhado em [06-testes-bancada.md](06-testes-bancada.md).
   - [x] Ponte a 3 fios (Vab cerca de +10 mV)
   - [x] INA125P diagnosticado como queimado ([ensaio 01](ensaios/01-sensores-2026-11-26.md)). Sem outro no laboratório: substituído por amplificador de instrumentação com LM324 ([`referencias/lm324.md`](referencias/lm324.md))
   - [x] LM324 montado e testado: A0 = 1,285 V parado (offset de cerca de 3 °C), ruído ≤ 1 contagem, os dois Pt100 fazem a saída subir ([ensaio 02](ensaios/02-lm324-2026-11-26.md))
+- [ ] Medidas de caracterização do LM324 (offset, ganho por estágio, deriva, ruído): [plano-lm324.md](plano-lm324.md), parte A
 - [ ] Parte 2: acionamento
 - [ ] Parte 3: sistema completo
 - [ ] **Decidir a montagem mecânica** (ventoinha, tamanho da caixa, posição dos Pt100): duas versões em [decisao-mecanica.md](decisao-mecanica.md)
