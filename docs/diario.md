@@ -7,6 +7,7 @@ Entradas mais recentes no topo.
 * Primeiro teste com o Uno R3 (`/dev/ttyACM0`), firmware `teste_sensores`, log `dados/2026-11-26_001655_sensores.tsv` (314 leituras, cerca de 5 min):
   * DS18B20 ok: detectado, 25,75 a 25,87 °C estável.
   * Pt100 sem sinal: A0 preso em 4,8 a 5,0 contagens (0,024 V), esperado cerca de 355 (1,74 V). Suspeitas: INA sem alimentação, VIN+/VIN− trocados (Vab negativo satura em 0 V), filtro mal ligado ou A0 desconectado. Circuito em revisão; sem multímetro no momento.
+  * Esquemático conferido: polaridade correta (nó a no VIN+, Vab = +9,34 mV a 25 °C). Relatório e checklist em [`ensaios/01-sensores-2026-11-26.md`](ensaios/01-sensores-2026-11-26.md).
 * Decidido testar por partes, começando pela medição interna. Criados `firmware/teste_ponte/` (só A0, D3 forçado em LOW) e o roteiro `docs/06-testes-bancada.md` com valores esperados de cada nó da ponte.
 * Parte 1 passou a testar também o DS18B20 junto com a ponte: firmware renomeado para `firmware/teste_sensores/` (A0 + D2, D3 em LOW).
 

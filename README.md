@@ -28,6 +28,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 4. [Simulações](docs/04-simulacoes.md): resultados do LTspice e status das figuras
 5. [Pendências](docs/05-pendencias.md): o que falta e próximos passos
 6. [Testes de bancada](docs/06-testes-bancada.md): roteiro por partes com valores esperados
+   * Ensaios realizados: [`docs/ensaios/`](docs/ensaios/), um arquivo por ensaio com resultados e checklist
 7. [Diário](docs/diario.md): registro datado do andamento
 
 ## Compilar o relatório

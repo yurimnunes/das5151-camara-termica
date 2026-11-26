@@ -120,4 +120,6 @@ Deixar rodando 5 a 10 minutos parado. Esse log (`dados/*_sensores.tsv`) mostra a
 
 ### Resultado da Parte 1
 
+Ensaios já feitos: [01 (2026-11-26)](ensaios/01-sensores-2026-11-26.md).
+
 Registrar no [diário](diario.md): valores medidos em 1.1 a 1.3, nome do arquivo de log do 1.4, ruído observado e o que precisou ser corrigido.
