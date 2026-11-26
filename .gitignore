@@ -1,0 +1,44 @@
+# LaTeX: arquivos gerados na compilação
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.xdv
+main.pdf
+build/
+
+# LTspice: resultados de simulação (regeneráveis a partir do .asc)
+*.raw
+*.net
+*.log
+
+# Arduino: binários compilados
+*.hex
+*.elf
+*.bin
+
+# Sistema operacional e editores
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.vscode/
+.idea/
+
+# Python (scripts de análise de dados, se houver)
+__pycache__/
+.venv/
+
+# Configuração local do Claude Code
+.claude/settings.local.json
