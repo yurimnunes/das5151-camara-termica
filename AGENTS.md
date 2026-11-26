@@ -17,7 +17,7 @@ Projeto final de DAS5151 Instrumentação em Controle (UFSC). Controle de temper
 
 * O relatório em `relatorio/` (`preambulo.tex` + `secoes/*.tex`) manda em valores de componentes e cálculos. Se os docs divergirem dele, o `.tex` vence e os docs devem ser corrigidos.
 * Ao mudar a estrutura do relatório (seção, figura, label), atualizar a tabela do `relatorio/README.md` no mesmo commit.
-* `teste_camara.ino` é o firmware de teste (sem malha fechada ainda).
+* `firmware/teste_camara/teste_camara.ino` é o firmware de teste (sem malha fechada ainda).
 
 ## Armadilhas conhecidas
 
@@ -35,7 +35,22 @@ cd relatorio && latexmk -pdf -outdir=../build main.tex
 
 Zip para o Overleaf (conteúdo do último commit; avisa se `relatorio/` tiver mudanças não commitadas): `sh scripts/overleaf-zip.sh` → `build/relatorio-overleaf.zip`. **Só rodar quando o usuário pedir explicitamente.** Nunca gerar o zip por conta própria depois de mexer no relatório.
 
-Firmware: IDE do Arduino com as bibliotecas OneWire e DallasTemperature. Serial em 9600 baud.
+Firmware e bancada (detalhes e instalação em `docs/03-firmware.md`):
+
+```sh
+arduino-cli compile firmware/teste_camara
+arduino-cli upload -p /dev/ttyACM0 firmware/teste_camara
+.venv/bin/python scripts/monitor_serial.py -n <nome-do-ensaio>   # rodar em segundo plano
+echo 30 > build/serial_cmd                                       # PWM em %, com o monitor rodando
+tail -n 20 dados/<arquivo>.tsv                                   # ler as últimas medidas
+```
+
+Regras de bancada para agentes:
+
+* **Hardware real ligado em 12 V e 2,2 A.** Só mudar PWM, gravar firmware ou iniciar ensaio quando o usuário pedir.
+* Antes de `upload`, parar o monitor (só um programa usa a porta).
+* Parar o monitor com kill normal (SIGTERM), nunca `kill -9`: ele manda PWM 0 ao sair.
+* Se o log mostrar `!! Protecao` ou temperatura subindo além do esperado, mandar `echo 0 > build/serial_cmd` e avisar o usuário.
 
 ## Convenções
 

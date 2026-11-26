@@ -13,7 +13,9 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 |---|---|
 | `relatorio/` | Relatório em LaTeX, um arquivo por seção. Mapa em [`relatorio/README.md`](relatorio/README.md) |
 | `scripts/overleaf-zip.sh` | Gera o zip do relatório para subir no Overleaf |
-| `teste_camara.ino` | Firmware de teste dos módulos (sensores e PWM) |
+| `firmware/teste_camara/` | Firmware de teste dos módulos (sensores e PWM) |
+| `scripts/monitor_serial.py` | Monitor serial: mostra, grava em `dados/` e envia comandos |
+| `dados/` | Logs dos ensaios (`.tsv`) |
 | `docs/` | Resumos e anotações do projeto |
 | `AGENTS.md` / `CLAUDE.md` | Contexto e regras para agentes de IA |
 
@@ -21,7 +23,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 
 1. [Visão geral](docs/01-visao-geral.md): objetivo, premissas, mudanças em relação à proposta
 2. [Hardware](docs/02-hardware.md): componentes, circuitos, pinagem
-3. [Firmware](docs/03-firmware.md): o que o `teste_camara.ino` faz e como usar
+3. [Firmware](docs/03-firmware.md): preparar o Linux, gravar no Uno, monitorar e o que o `teste_camara.ino` faz
 4. [Simulações](docs/04-simulacoes.md): resultados do LTspice e status das figuras
 5. [Pendências](docs/05-pendencias.md): o que falta e próximos passos
 6. [Diário](docs/diario.md): registro datado do andamento
