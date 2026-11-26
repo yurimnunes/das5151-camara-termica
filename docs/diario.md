@@ -5,6 +5,7 @@ Entradas mais recentes no topo.
 ## 2026-11-26
 
 * Decidido testar por partes, começando pela medição interna. Criados `firmware/teste_ponte/` (só A0, D3 forçado em LOW) e o roteiro `docs/06-testes-bancada.md` com valores esperados de cada nó da ponte.
+* Parte 1 passou a testar também o DS18B20 junto com a ponte: firmware renomeado para `firmware/teste_sensores/` (A0 + D2, D3 em LOW).
 
 ## 2026-11-25
 

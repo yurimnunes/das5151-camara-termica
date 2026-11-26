@@ -14,7 +14,7 @@ Controle da temperatura de uma câmara de EPS aquecida por resistores via PWM. T
 | `relatorio/` | Relatório em LaTeX, um arquivo por seção. Mapa em [`relatorio/README.md`](relatorio/README.md) |
 | `scripts/overleaf-zip.sh` | Gera o zip do relatório para subir no Overleaf |
 | `firmware/teste_camara/` | Firmware de teste dos módulos (sensores e PWM) |
-| `firmware/teste_ponte/` | Firmware só da medição interna (ponte + INA125P) |
+| `firmware/teste_sensores/` | Firmware dos sensores (Pt100 + DS18B20), aquecedor desligado |
 | `scripts/monitor_serial.py` | Monitor serial: mostra, grava em `dados/` e envia comandos |
 | `dados/` | Logs dos ensaios (`.tsv`) |
 | `docs/` | Resumos e anotações do projeto |

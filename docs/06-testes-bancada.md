@@ -2,18 +2,22 @@
 
 Testar por partes, nesta ordem. Só passar para a próxima parte quando a anterior bater com o esperado.
 
-1. **Medição interna** (ponte + INA125P): este documento
-2. Temperatura ambiente (DS18B20): a escrever
-3. Acionamento do aquecedor (PC817 + TIP122): a escrever
-4. Sistema completo e ensaio de degrau: a escrever
+1. **Sensores** (medição interna com ponte + INA125P e medição ambiente com DS18B20): este documento
+2. Acionamento do aquecedor (PC817 + TIP122): a escrever
+3. Sistema completo e ensaio de degrau: a escrever
 
 ---
 
-## Parte 1: medição interna (ponte + INA125P)
+## Parte 1: sensores (medição interna e ambiente)
 
-**Montar só:** Pt100 A e B, R3 e R5 (100 Ω), Rtop (1,5 kΩ), Rbot (1 kΩ), INA125P com RG (330 Ω) e capacitor de 100 nF, filtro RC (1 kΩ + 100 µF). Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png).
+**Montar só:**
 
-**Não ligar:** DS18B20, acionamento e fonte de 12 V. O firmware `teste_ponte` mantém o D3 em nível baixo de qualquer forma.
+* Medição interna: Pt100 A e B, R3 e R5 (100 Ω), Rtop (1,5 kΩ), Rbot (1 kΩ), INA125P com RG (330 Ω) e capacitor de 100 nF, filtro RC (1 kΩ + 100 µF). Esquema: [`esq_pt100_ina125.png`](../relatorio/figuras/esq_pt100_ina125.png).
+* Medição ambiente: DS18B20 com pull-up de 3,3 kΩ e capacitor de 100 nF. Esquema: [`esq_ds18b20.png`](../relatorio/figuras/esq_ds18b20.png).
+
+**Não ligar:** acionamento e fonte de 12 V. O firmware `teste_sensores` mantém o D3 em nível baixo de qualquer forma.
+
+As partes 1.1 a 1.3 testam a ponte, a 1.4 testa a ligação do DS18B20 e a 1.5 lê os dois juntos pelo Arduino.
 
 Os valores esperados abaixo supõem alimentação de exatamente 5,00 V. Se o 5 V do Arduino medir diferente (no USB é comum ficar entre 4,8 e 5,1 V), as tensões mudam na mesma proporção.
 
@@ -59,17 +63,32 @@ Medir no pino 10 (VO) em relação ao GND:
 
 Regra rápida: VO ≈ 186 × Vab. Segurando um Pt100, VO sobe cerca de 35 mV por °C.
 
-### 1.4 Com o Arduino lendo o A0
+### 1.4 DS18B20: ligação
+
+**Antes de energizar,** descobrir qual fio é o terra. A sonda tem fios vermelho, azul e preto, e inverter alimentação e terra queima o sensor. Com o multímetro em modo diodo, o terra é o fio que mostra queda de diodo (cerca de 0,5 a 0,7 V) com a ponta **vermelha** nele e a preta em cada um dos outros dois.
+
+| Ligação | Pino do Arduino |
+|---|---|
+| Vermelho (VDD) | 5 V |
+| Dados (DQ) | D2, com 3,3 kΩ entre D2 e 5 V |
+| Terra (confirmado com multímetro) | GND |
+| 100 nF entre VDD e GND, perto da sonda | |
+
+Com o Arduino ligado, a linha de dados (D2) em repouso mede perto de 5 V.
+
+### 1.5 Com o Arduino lendo os dois sensores
 
 Ligar a saída do filtro no A0, gravar o firmware e abrir o monitor:
 
 ```sh
 arduino-cli board list
-arduino-cli upload -p /dev/ttyACM0 firmware/teste_ponte
-.venv/bin/python scripts/monitor_serial.py -n ponte
+arduino-cli upload -p /dev/ttyACM0 firmware/teste_sensores
+.venv/bin/python scripts/monitor_serial.py -n sensores
 ```
 
-Colunas: `tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C`.
+O cabeçalho deve mostrar `DS18B20 encontrados: 1`.
+
+Colunas: `tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C  T_amb_C`.
 
 | O que olhar | Esperado |
 |---|---|
@@ -78,8 +97,11 @@ Colunas: `tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C`.
 | `ruido_cont` | 0 a 2 contagens. Acima de 5: mau contato, fio longo ou falta do capacitor |
 | `T_pt100_C` | perto do ambiente, com offset de alguns °C antes da calibração |
 | Segurar um Pt100 por 30 s e soltar | sobe alguns °C de forma suave e depois volta devagar |
+| `T_amb_C` | temperatura ambiente, variando no máximo 0,1 a 0,2 °C com tudo parado |
+| Segurar a sonda do DS18B20 | `T_amb_C` sobe; `T_pt100_C` não muda (prova que um sensor não interfere no outro) |
+| `T_pt100_C` contra `T_amb_C`, com os Pt100 fora da câmara | diferença constante = offset do Pt100, útil para a calibração |
 
-Deixar rodando 5 a 10 minutos parado. Esse log (`dados/*_ponte.tsv`) mostra a estabilidade e o ruído da medição.
+Deixar rodando 5 a 10 minutos parado. Esse log (`dados/*_sensores.tsv`) mostra a estabilidade e o ruído das duas medições.
 
 ### Diagnóstico rápido
 
@@ -92,6 +114,9 @@ Deixar rodando 5 a 10 minutos parado. Esse log (`dados/*_ponte.tsv`) mostra a es
 | VO preso perto de 4 V ou mais | saturação: Vab alto demais, RG errado ou SENSE (pino 11) solto do VO (pino 10) |
 | VO certo mas `A0_V` diferente | filtro mal ligado, capacitor invertido (faixa no GND) ou GNDs diferentes |
 | `ruido_cont` alto | mau contato na protoboard, falta do 100 nF entre os pinos 1 e 3, cabo do Pt100 perto de fonte de ruído |
+| `DS18B20 encontrados: 0` e `T_amb_C` = `erro` | dados fora do D2, falta do pull-up de 3,3 kΩ ou fios trocados |
+| `T_amb_C` = 85,00 fixo | sensor sem alimentação estável (é o valor de quando liga) ou VDD mal ligado |
+| `T_amb_C` = −127 ou `erro` às vezes | mau contato no fio de dados ou pull-up fraco para o cabo |
 
 ### Resultado da Parte 1
 

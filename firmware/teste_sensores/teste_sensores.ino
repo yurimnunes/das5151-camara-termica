@@ -1,18 +1,25 @@
 // =====================================================================
-// DAS5151 - Câmara térmica | TESTE SÓ DA MEDIÇÃO INTERNA (ponte + INA125P)
+// DAS5151 - Câmara térmica | TESTE DOS SENSORES (sem acionamento)
 // ---------------------------------------------------------------------
-// - Lê a saída do INA125P no A0 (após o filtro RC) e estima a temperatura
-// - NÃO lê o DS18B20 e NÃO aciona o aquecedor (D3 fica em LOW)
+// - Medição interna: saída do INA125P no A0 (após o filtro RC)
+// - Medição ambiente: DS18B20 no D2, leitura sem travar o loop
+// - NÃO aciona o aquecedor: D3 fica em LOW o tempo todo
 //
+// Bibliotecas: OneWire, DallasTemperature.
 // Serial: 9600 baud. Uma linha por segundo:
-//   tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C
+//   tempo_s  A0_cont  ruido_cont  A0_V  Vab_mV  T_pt100_C  T_amb_C
 //   A0_cont    = média de 64 leituras do A/D (0 a 1023)
 //   ruido_cont = maior menos menor leitura dentro das 64 (pico a pico)
 //   Vab_mV     = tensão da ponte estimada (A0_V / ganho do INA)
+//   T_amb_C    = "erro" se o DS18B20 não responder
 // =====================================================================
 
-const int PINO_PWM   = 3;    // garante o aquecedor desligado se o acionamento estiver montado
-const int PINO_PT100 = A0;
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+const int PINO_DS18B20 = 2;
+const int PINO_PWM     = 3;   // garante o aquecedor desligado se o acionamento estiver montado
+const int PINO_PT100   = A0;
 
 // Mesma reta do teste_camara (simulação): 68,7 mV/°C, 1,736 V a 25 °C.
 // Ajustar depois com a calibração em 2 pontos.
@@ -22,19 +29,34 @@ const float GANHO_INA    = 4.0 + 60000.0 / 330.0;  // RG = 330 ohm
 const float V_ADC_REF    = 5.0;
 const int   N_AMOSTRAS   = 64;
 
+OneWire oneWire(PINO_DS18B20);
+DallasTemperature ds18b20(&oneWire);
+
 unsigned long ultimoPrint = 0;
 
 void setup() {
   pinMode(PINO_PWM, OUTPUT);
   digitalWrite(PINO_PWM, LOW);
   Serial.begin(9600);
-  Serial.println(F("Teste da ponte (medicao interna)"));
-  Serial.println(F("tempo_s\tA0_cont\truido_cont\tA0_V\tVab_mV\tT_pt100_C"));
+
+  ds18b20.begin();
+  ds18b20.setResolution(12);           // 0,0625 °C
+  ds18b20.setWaitForConversion(false); // não trava o loop (750 ms)
+  ds18b20.requestTemperatures();
+
+  Serial.println(F("Teste dos sensores (Pt100 + DS18B20), aquecedor desligado"));
+  Serial.print(F("DS18B20 encontrados: "));
+  Serial.println(ds18b20.getDeviceCount());
+  Serial.println(F("tempo_s\tA0_cont\truido_cont\tA0_V\tVab_mV\tT_pt100_C\tT_amb_C"));
 }
 
 void loop() {
   if (millis() - ultimoPrint < 1000) return;
   ultimoPrint = millis();
+
+  // DS18B20: pega a conversão anterior e dispara a próxima
+  float tAmb = ds18b20.getTempCByIndex(0);
+  ds18b20.requestTemperatures();
 
   long soma = 0;
   int minimo = 1023, maximo = 0;
@@ -54,5 +76,7 @@ void loop() {
   Serial.print(maximo - minimo);   Serial.print('\t');
   Serial.print(vA0, 3);            Serial.print('\t');
   Serial.print(vab, 2);            Serial.print('\t');
-  Serial.println(t, 2);
+  Serial.print(t, 2);              Serial.print('\t');
+  if (tAmb == DEVICE_DISCONNECTED_C) Serial.println(F("erro"));
+  else                               Serial.println(tAmb, 2);
 }

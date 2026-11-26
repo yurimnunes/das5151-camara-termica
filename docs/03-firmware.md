@@ -11,7 +11,7 @@ Testado no Pop!_OS 24.04.
    arduino-cli core install arduino:avr
    arduino-cli lib install OneWire DallasTemperature
    ```
-2. **Permissão na porta serial:** `sudo usermod -aG dialout $USER`, depois sair da sessão e entrar de novo (ou reiniciar). Sem isso, gravar dá `Permission denied` em `/dev/ttyACM0`.
+2. **Permissão na porta serial:** `sudo usermod -aG dialout $USER`. Sem isso, gravar dá `Permission denied` em `/dev/ttyACM0`. O Linux só carrega os grupos no login, então a permissão vale depois de encerrar a sessão do computador (menu do canto superior direito → Encerrar sessão) e entrar de novo, ou reiniciar. Para usar antes disso, rodar cada comando com `sg dialout -c '<comando>'`.
 3. **Monitor em Python:** na raiz do repo, `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`.
 4. **Só se o Uno for clone com chip CH340** e não aparecer `/dev/ttyUSB0` ao conectar: `sudo apt remove brltty` (esse pacote "rouba" a porta). O Uno original aparece como `/dev/ttyACM0` e não tem esse problema.
 
